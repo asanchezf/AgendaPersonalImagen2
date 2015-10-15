@@ -61,7 +61,7 @@
     <string name="categoria2">Amigos</string>
     <string name="categoria3">Compañeros</string>
     <string name="categoria4">Otros</string>
-    <string name="categoria5">Importado Android</string>
+    <string name="categoria5">Importado de Android</string>
 
     <string name="title_activity_importar_contactos">Importar Contactos de Android</string>
     <string name="confirm_import">Se ha finalizado la importación de los contactos guardados en Android</string>
@@ -78,8 +78,9 @@
 
     <string name="title_activity_settings">Acerca de</string>
 
-    <string name="nueva_linea">Bienvenido\na tu agenda\nde contactos..!</string>
+    <string name="nueva_linea2">Agenda\nde contactos\npersonal</string>
 
+    <string name="nueva_linea">Bienvenido\na tu agenda\nde contactos.</string>
     <string name="check_toast">Position %1$d : %2$s</string>
 
     <string name="title_activity_borrar_usuarios">Borrar Contactos</string>
@@ -89,6 +90,8 @@
     </string>
     <string name="twiter">Sigueme en twiter:</string>
     <string name="enlace"><a href="http://twitter.com/antoniom_sf">http://twitter.com/antoniom_sf</a></string>
+    <string name="desarrollador">Desarrollador Android:</string>
+    <string name="miemail">antoniom.sanchezf@gmail.com</string>
 
 
 </resources>

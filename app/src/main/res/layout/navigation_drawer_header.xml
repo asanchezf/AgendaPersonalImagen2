@@ -44,8 +44,8 @@
             android:layout_height="15dp"
             android:layout_gravity="center"
             android:gravity="center_vertical"
-            android:text="Desarrollador Android:"
-            android:textColor="@color/md_grey_800"
+            android:text="@string/desarrollador"
+            android:textColor="@color/md_grey_900"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
         <TextView
@@ -53,8 +53,8 @@
             android:layout_height="16dp"
             android:layout_gravity="center"
             android:gravity="center_vertical"
-            android:text="antoniom.sanchezf@gmail.com"
-            android:textColor="@color/md_grey_800"
+            android:text="@string/miemail"
+            android:textColor="@color/md_black_1000"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     </LinearLayout>

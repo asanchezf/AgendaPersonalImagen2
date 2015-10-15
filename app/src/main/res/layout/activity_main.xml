@@ -75,9 +75,9 @@
         <ImageView
             android:id="@+id/imageini"
             android:layout_width="350dp"
-            android:layout_height="60dp"
+            android:layout_height="80dp"
             android:layout_gravity="center"
-            android:layout_marginTop="230dp"
+            android:layout_marginTop="210dp"
             android:scaleType="centerCrop"
             android:src="@drawable/imagesinit" />
 <!--

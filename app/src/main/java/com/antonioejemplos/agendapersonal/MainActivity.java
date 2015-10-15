@@ -13,8 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.TextView;
 
 import activitys.ActivityLista;
 import activitys.AltaUsuarios;
@@ -27,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     Toolbar toolbar;
     ActionBar actionBar;
-    TextView textView;
-    Button boton;
+    //TextView textView;
+    //Button boton;
 
 
 
