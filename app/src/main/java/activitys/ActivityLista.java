@@ -26,8 +26,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import com.videumcorp.desarrolladorandroid.navigatio.R;
-
 import com.antonioejemplos.agendapersonal.R;
 
 import java.sql.SQLException;
@@ -37,6 +35,8 @@ import Beans.Contactos;
 import controlador.SQLControlador;
 
 import static android.widget.SearchView.OnQueryTextListener;
+
+//import com.videumcorp.desarrolladorandroid.navigatio.R;
 
 //import antonio.ejemplos.agendacomercial.R;
 
@@ -86,6 +86,11 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
     private int textlength = 0;
     private SearchView searchView;
 
+    //Para el botón FloatingActionButton
+    //Instancia global del FAB
+
+    com.melnykov.fab.FloatingActionButton fab;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +107,9 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
 
         //Añadimos la toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        // Obtener instancia del FAB
+        fab = (com.melnykov.fab.FloatingActionButton)findViewById(R.id.fab);
 
         //La acitivity debe extender de AppCompatActivity para poder hacer el seteo a ActionBar
         setSupportActionBar(toolbar);
@@ -143,7 +151,7 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView adapterView, View view,int posicion, long id) {// int posicion, long id
+            public void onItemClick(AdapterView adapterView, View view, int posicion, long id) {// int posicion, long id
 
                 // Solo hace falta si llamamos al m�todo que devuelve una Colleccion
 
@@ -157,7 +165,7 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
                     // Se cambia por otro m�todo que devuelve un cursor...
                     Cursor c = dbConnection.CursorBuscarUno(id);// Devuelve un Cursor
 
-                    int _id= c.getInt(c.getColumnIndex("_id"));
+                    int _id = c.getInt(c.getColumnIndex("_id"));
 
 
                     String nombre = c.getString(c.getColumnIndex("Nombre"));
@@ -168,7 +176,7 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
                     String telefono = c.getString(c.getColumnIndex("Telefono"));
                     String email = c.getString(c.getColumnIndex("Email"));
 
-                    int categoria=c.getInt(c.getColumnIndex("Id_Categoria"));
+                    int categoria = c.getInt(c.getColumnIndex("Id_Categoria"));
                     String observ = c.getString(c.getColumnIndex("Observaciones"));
 
                     // txtCaja2.setText("" + posicion + " posicion");
@@ -176,7 +184,7 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
                     dbConnection.cerrar();
 
                     // Pasamos datos al formulario en modo visualizar
-                    Intent i = new Intent(ActivityLista.this,ModificarUsuarios.class);
+                    Intent i = new Intent(ActivityLista.this, ModificarUsuarios.class);
                     i.putExtra("Nombre", nombre);
                     i.putExtra("Apellidos", apellidos);
                     i.putExtra("Direccion", direccion);
@@ -198,6 +206,20 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
 
             }
         });
+
+
+        // Asignar escucha  FAB
+        fab.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Iniciar actividad de inserción
+                        Intent i = new Intent(ActivityLista.this, AltaUsuarios.class);
+                        startActivityForResult(i, C_CREAR);
+
+                    }
+                }
+        );
 
     }
     @Override
