@@ -64,7 +64,7 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
         android:src="@drawable/ic_add"
-        fab:fab_colorNormal="@color/md_grey_400"
+        fab:fab_colorNormal="@color/md_blue_400"
         fab:fab_colorPressed="@color/md_purple_A100"
         fab:fab_colorRipple="@color/md_amber_900" />
 
