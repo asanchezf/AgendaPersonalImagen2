@@ -21,6 +21,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,8 +35,13 @@ import java.util.ArrayList;
 import Beans.Contactos;
 import controlador.SQLControlador;
 
+
+
+//Para el buscador
 import static android.widget.SearchView.OnQueryTextListener;
 
+//Para el animate del FAB en Lollipod
+import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
 //import com.videumcorp.desarrolladorandroid.navigatio.R;
 
 //import antonio.ejemplos.agendacomercial.R;
@@ -86,10 +92,12 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
     private int textlength = 0;
     private SearchView searchView;
 
+
     //Para el botón FloatingActionButton
     //Instancia global del FAB
-
     com.melnykov.fab.FloatingActionButton fab;
+    private static final int DURATION = 150;//duración animación FAB
+
 
 
     @Override
@@ -221,7 +229,65 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
                 }
         );
 
-    }
+
+        //Evento para que se mueva el FAB.FORMA 1. Solo se esconde
+      /*  OnScrollUpDownListener.Action scrollAction = new OnScrollUpDownListener.Action() {
+
+            @Override
+            public void up() {
+                fab.hide();
+            }
+
+            @Override
+            public void down() {
+                fab.show();
+            }
+
+        };*/
+
+
+        //Evento para que se mueva el FAB. FORMA 2:Utilizando animación... solo para Lollipod
+        //Necesario hacer un import de animate...
+        OnScrollUpDownListener.Action scrollAction = new OnScrollUpDownListener.Action() {
+
+            private boolean hidden = true;
+
+            @Override
+            public void up() {
+                if (hidden) {
+                    hidden = false;
+                    animate(fab)
+                            .translationY(fab.getHeight() +
+                                    getResources().getDimension(R.dimen.fab_margin))
+                            .setInterpolator(new LinearInterpolator())
+                            .setDuration(DURATION);
+                }
+            }
+
+            @Override
+            public void down() {
+                if (!hidden) {
+                    hidden = true;
+                    animate(fab)
+                            .translationY(0)
+                            .setInterpolator(new LinearInterpolator())
+                            .setDuration(DURATION);
+
+                }
+            }
+
+        };
+
+        lista.setOnScrollListener(new OnScrollUpDownListener(lista, 8, scrollAction));
+
+
+    }//Fin OnCreate
+
+
+
+
+
+
     @Override
     protected void onStart() {
     	/*
