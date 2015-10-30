@@ -48,13 +48,14 @@
         android:layout_height="match_parent">
 
 
-
+<!--TODO Ver si emplementar un selector para que cambien el color del item al ser seleccionado-->
         <ListView
             android:id="@android:id/list"
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/image_list_item_3" />
+            tools:listitem="@layout/image_list_item_3"
+            android:listSelector="@drawable/listview_background"/>
 
         <com.melnykov.fab.FloatingActionButton
             android:id="@+id/fab"

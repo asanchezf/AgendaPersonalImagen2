@@ -3,6 +3,7 @@ package activitys;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.pm.ActivityInfo;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,13 +20,13 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-//import com.videumcorp.desarrolladorandroid.navigatio.R;
-
 import com.antonioejemplos.agendapersonal.R;
 
 import java.sql.SQLException;
 
 import controlador.SQLControlador;
+
+//import com.videumcorp.desarrolladorandroid.navigatio.R;
 
 //import antonio.ejemplos.agendacomercial.R;
 
@@ -57,7 +58,9 @@ public class AltaUsuarios extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_alta_usuarios_material);
-		
+
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
 		nombre=(EditText) findViewById(R.id.nombre);
 		apellidos=(EditText) findViewById(R.id.apellidos);
 		direc=(EditText) findViewById(R.id.direc);

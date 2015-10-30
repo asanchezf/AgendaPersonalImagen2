@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
@@ -20,8 +21,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-//import com.videumcorp.desarrolladorandroid.navigatio.R;
-
 import com.antonioejemplos.agendapersonal.R;
 
 import java.sql.SQLException;
@@ -31,6 +30,8 @@ import java.util.GregorianCalendar;
 
 import Beans.Contactos;
 import controlador.SQLControlador;
+
+//import com.videumcorp.desarrolladorandroid.navigatio.R;
 
 //import antonio.ejemplos.agendacomercial.R;
 
@@ -68,6 +69,7 @@ public class ImportarContactos extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_importar_contactos);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 //Añadimos la toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);

@@ -7,6 +7,7 @@ package activitys;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -35,13 +36,11 @@ import java.util.ArrayList;
 import Beans.Contactos;
 import controlador.SQLControlador;
 
-
+import static android.widget.SearchView.OnQueryTextListener;
+import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
 
 //Para el buscador
-import static android.widget.SearchView.OnQueryTextListener;
-
 //Para el animate del FAB en Lollipod
-import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
 //import com.videumcorp.desarrolladorandroid.navigatio.R;
 
 //import antonio.ejemplos.agendacomercial.R;
@@ -107,6 +106,7 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
         // setContentView(R.layout.activity_main);//--MODIFICACION
         setContentView(R.layout.inicio);//Contiene un Listview y una caja d texto para la salida sin datos. UTILIZADO EN UPV
 
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         lista = (ListView) findViewById(android.R.id.list);// -----MODIFICACION-2
          //lista = (ListView) findViewById(R.id.list);
@@ -314,7 +314,7 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
 
         //Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
 
-        //Para preserver el scroll del listview
+        //Para preserver el scroll dela listview
         if(lista != null) {
             if (lista.getCount() > index) lista.setSelectionFromTop(index, 0);
             else lista.setSelectionFromTop(0, 0);

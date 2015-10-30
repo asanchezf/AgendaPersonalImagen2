@@ -8,6 +8,7 @@ package activitys;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,8 +23,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-//import com.videumcorp.desarrolladorandroid.navigatio.R;
-
 import com.antonioejemplos.agendapersonal.R;
 
 import java.sql.SQLException;
@@ -31,6 +30,8 @@ import java.util.ArrayList;
 
 import Beans.ContactosBorrar;
 import controlador.SQLControlador;
+
+//import com.videumcorp.desarrolladorandroid.navigatio.R;
 
 
 public class BorrarUsuarios extends AppCompatActivity {
@@ -57,9 +58,8 @@ public class BorrarUsuarios extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.listview_borrar_agenda);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         lista = (ListView) findViewById(android.R.id.list);
 
