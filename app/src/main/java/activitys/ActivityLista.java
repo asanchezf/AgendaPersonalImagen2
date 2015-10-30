@@ -50,6 +50,7 @@ import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
 public class ActivityLista extends AppCompatActivity implements OnQueryTextListener, SearchView.OnQueryTextListener,MenuItemCompat.OnActionExpandListener {// -EXTENDS DE LISTACTIVITY---MODIFICACION-1..UPV
 
     private ListView lista;// OBJETO LISTVIEW
+    private int index;//ïndice de la lista. para preservar el scroll; en On onPause y en onResume
     private SQLControlador dbConnection;//CONTIENE LAS CONEXIONES A BBDD (CREADA EN DBHELPER.CLASS) Y LOS M�TODOS INSERT, UPDATE, DELETE, BUSCAR....
     private ArrayList<Contactos> contactos;//COLECCION DE TIPO CONTACTOS (BEAN CON LA MISMA ESTRUTURA DE CAMPOS QUE LA BBDD)
 
@@ -312,7 +313,14 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
         //mp.start();
 
         //Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
-    }
+
+        //Para preserver el scroll del listview
+        if(lista != null) {
+            if (lista.getCount() > index) lista.setSelectionFromTop(index, 0);
+            else lista.setSelectionFromTop(0, 0);
+        }
+
+        }
 
 
 
@@ -327,6 +335,9 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
 
         //Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
         super.onPause();
+
+        //Para preserver el scroll del listView
+        index = lista.getFirstVisiblePosition(); // store index using shared preferences
     }
 
 

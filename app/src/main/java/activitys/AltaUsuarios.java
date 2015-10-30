@@ -56,7 +56,7 @@ public class AltaUsuarios extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_alta_usuarios);
+		setContentView(R.layout.activity_alta_usuarios_material);
 		
 		nombre=(EditText) findViewById(R.id.nombre);
 		apellidos=(EditText) findViewById(R.id.apellidos);

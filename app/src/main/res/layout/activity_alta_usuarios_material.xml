@@ -1,11 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/AppAgendaTema"
-    tools:context=".ModificarUsuarios">
-
+    tools:context=".AltaUsuarios">
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -29,113 +29,131 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:theme="@style/ToolbarTheme" />
 
-
         //MODIFICACIONES PARA MATERIAL DESING---------------//
 
-        <EditText
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/nombreWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="@dimen/abc_edit_text_inset_top_material"
+            android:theme="@style/TextLabel">
+
+        <android.support.v7.widget.AppCompatEditText
             android:id="@+id/nombre"
             android:layout_width="@dimen/abc_search_view_preferred_width"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
 
-            android:layout_below="@+id/toolbar"
-
-
             android:hint="@string/Name"
             android:inputType="textCapSentences"
-            android:layout_marginLeft="10dp"
-            android:textColorHint="#CFCFCF"
-            android:drawableLeft="@drawable/ic_action_action_account_box"
-            android:layout_marginTop="@dimen/abc_edit_text_inset_top_material"/>
 
+            />
 
-        <EditText
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/apellidosWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="35dp"
+            android:layout_below="@+id/nombreWrapper"
+            android:theme="@style/TextLabel">
+
+        <android.support.v7.widget.AppCompatEditText
             android:id="@+id/apellidos"
             android:layout_width="@dimen/abc_panel_menu_list_width"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/nombre"
 
             android:inputType="textCapSentences"
             android:hint="@string/Apell"
 
-            android:layout_marginTop="0dp"
-            android:layout_marginLeft="35dp"
-            android:textColorHint="#CFCFCF" />
+            />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/direcWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/TextLabel"
+            android:layout_marginLeft="10dp"
+            android:paddingLeft="5dp"
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/apellidosWrapper">
 
 
-        <EditText
+        <android.support.v7.widget.AppCompatEditText
             android:id="@+id/direc"
             android:layout_width="@dimen/abc_search_view_preferred_width"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/apellidos"
+            android:layout_below="@+id/apellidosWrapper"
 
-            android:layout_marginLeft="10dp"
+
             android:hint="@string/Adress"
-            android:inputType="textCapSentences"
+            android:inputType="textCapSentences" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/telefonoWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/TextLabel"
+            android:layout_marginLeft="10dp"
             android:paddingLeft="5dp"
-            android:textColorHint="#CFCFCF"
-            android:drawableLeft="@drawable/ic_action_communication_location_on"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/direcWrapper">
 
-
-        <EditText
+        <android.support.v7.widget.AppCompatEditText
             android:id="@+id/telefono"
             android:layout_width="@dimen/abc_search_view_text_min_width"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/direc"
-
-            android:layout_marginLeft="10dp"
+            android:layout_below="@+id/direcWrapper"
             android:hint="@string/Telephone"
-            android:inputType="phone"
+            android:inputType="phone"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/emailWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/TextLabel"
+            android:layout_marginLeft="10dp"
             android:paddingLeft="5dp"
-            android:textColorHint="#CFCFCF"
-            android:drawableLeft="@drawable/ic_action_communication_phone"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/telefonoWrapper">
 
-        </EditText>
-
-
-        <EditText
+        <android.support.v7.widget.AppCompatEditText
             android:id="@+id/email"
             android:layout_width="@dimen/abc_panel_menu_list_width"
 
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/telefono"
-
-            android:layout_marginLeft="10dp"
+            android:layout_below="@+id/telefonoWrapper"
             android:hint="@string/email"
-            android:inputType="textEmailAddress"
-            android:paddingLeft="5dp"
-            android:textColorHint="#CFCFCF"
-            android:drawableLeft="@drawable/ic_action_communication_email"
-            android:layout_marginTop="15dp"/>
+            android:inputType="textEmailAddress" />
+        </android.support.design.widget.TextInputLayout>
 
-        <!--android:ems="10"-->
         <TextView
             android:id="@+id/t_tipo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/email"
+            android:layout_below="@id/emailWrapper"
             android:layout_marginTop="20dp"
             android:paddingLeft="5dp"
-            android:textSize="20dp"
+            android:textSize="17dp"
             android:hint="@string/categoria"
             android:layout_marginLeft="10dp"
-            android:drawableLeft="@drawable/ic_action_av_playlist_add"
 
             />
-        <!--- Para que no aparezca
-               <Spinner
-                   android:id="@+id/tipo"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_alignTop="@id/t_tipo"
-                   android:layout_toRightOf="@id/t_tipo" />
-               -->
+
 
         <RadioGroup
             android:id="@+id/radioGroup1"
@@ -173,22 +191,21 @@
                 android:layout_height="wrap_content"
                 android:text="@string/categoria4" />
 
-            <!-- <RadioButton
-                 android:id="@+id/radio5"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:text="Otra País" />
 
-             <RadioButton
-                 android:id="@+id/radio6"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:text="Sin calificar" />-->
 
         </RadioGroup>
 
 
-        <EditText
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/observacionesWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/TextLabel"
+            android:paddingLeft="5dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/radioGroup1">
+
+        <android.support.v7.widget.AppCompatEditText
             android:id="@+id/observaciones"
             android:layout_width="@dimen/abc_search_view_preferred_width"
             android:layout_height="wrap_content"
@@ -199,16 +216,15 @@
             android:hint="@string/Observaciones"
 
             android:inputType="textCapSentences|textMultiLine"
-            android:paddingLeft="5dp"
-            android:textColorHint="#CFCFCF"
-            android:drawableLeft="@drawable/ic_action_av_playlist_add"
-            android:layout_marginTop="20dp"/>
+            />
+
+        </android.support.design.widget.TextInputLayout>
 
         <LinearLayout
             android:id="@+id/botonera"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/observaciones"
+            android:layout_below="@+id/observacionesWrapper"
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:orientation="horizontal">
@@ -247,6 +263,16 @@
         //FIN MODIFICACIONES PARA MATERIAL DESING---------------//
 
         <!--Se pone para evitar que colapse con la Navigation Bar-->
+        <!--<LinearLayout
+
+            android:id="@+id/linea"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="@android:color/white"
+            android:orientation="horizontal"
+            android:layout_below="@+id/botonera">
+        </LinearLayout>-->
+        <!--Se pone para evitar que colapse con la Navigation Bar-->
         <View
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -257,8 +283,4 @@
 
     </RelativeLayout>
 
-
 </ScrollView>
-   
-   
-
