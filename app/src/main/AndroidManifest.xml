@@ -20,6 +20,7 @@
 
         <activity
             android:name="activitys.SettingsActivity"
+            android:theme="@style/AppAgendaTema"
             android:label="@string/title_activity_settings"
             android:parentActivityName="com.antonioejemplos.agendapersonal.MainActivity">
             <meta-data

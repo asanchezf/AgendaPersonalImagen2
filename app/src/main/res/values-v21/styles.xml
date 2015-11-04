@@ -7,4 +7,7 @@
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
+     <!-- windowTranslucentNavigation se puede eliminar para Lollipod-->
+
 </resources>
+

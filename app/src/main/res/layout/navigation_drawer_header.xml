@@ -45,7 +45,7 @@
             android:layout_gravity="center"
             android:gravity="center_vertical"
             android:text="@string/desarrollador"
-            android:textColor="@color/md_grey_900"
+            android:textColor="@color/md_blue_800"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
         <TextView
@@ -54,7 +54,7 @@
             android:layout_gravity="center"
             android:gravity="center_vertical"
             android:text="@string/miemail"
-            android:textColor="@color/md_black_1000"
+            android:textColor="@color/md_blue_800"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     </LinearLayout>

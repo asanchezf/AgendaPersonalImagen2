@@ -10,13 +10,11 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -44,7 +42,6 @@ import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
 //import com.videumcorp.desarrolladorandroid.navigatio.R;
 
 //import antonio.ejemplos.agendacomercial.R;
-
 
 public class ActivityLista extends AppCompatActivity implements OnQueryTextListener, SearchView.OnQueryTextListener,MenuItemCompat.OnActionExpandListener {// -EXTENDS DE LISTACTIVITY---MODIFICACION-1..UPV
 
@@ -124,12 +121,14 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        TypedValue typedValueColorPrimaryDark = new TypedValue();
-        ActivityLista.this.getTheme().resolveAttribute(R.attr.colorPrimaryDark, typedValueColorPrimaryDark, true);
-        final int colorPrimaryDark = typedValueColorPrimaryDark.data;
-        if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setStatusBarColor(colorPrimaryDark);
-        }
+//        TypedValue typedValueColorPrimaryDark = new TypedValue();
+//        ActivityLista.this.getTheme().resolveAttribute(R.attr.colorPrimaryDark, typedValueColorPrimaryDark, true);
+//       final int colorPrimaryDark = typedValueColorPrimaryDark.data;
+//
+//
+//        if (Build.VERSION.SDK_INT >= 21) {
+//            getWindow().setStatusBarColor(colorPrimaryDark);
+//        }
 
 
         // Permite al ListView mostrar un men� contextual

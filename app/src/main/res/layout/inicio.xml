@@ -6,22 +6,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+
     tools:context=".activitys.ActivityLista">
 
 
+    <!--Se debe poner un framelayout para que no la toolbar no se superponga a la statusbar-->
+    <!--<FrameLayout-->
+        <!--android:id="@+id/frame"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/status_bar_kitkat_height"-->
+        <!--android:background="?colorPrimary" />-->
 
     <FrameLayout
-        android:id="@+id/frame"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/status_bar_kitkat_height"
-        android:background="@color/md_grey_600"/>
+        android:layout_height="@dimen/status_bar_height"
+        android:background="?colorPrimaryDark"/>
+    <!--android:layout_height="@dimen/status_bar_kitkat_height"-->
 
     <android.support.v7.widget.Toolbar
 
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/md_grey_600"
+        android:background="?attr/colorPrimary"
         android:elevation="4dp"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ToolbarTheme"
@@ -45,8 +52,9 @@
     <FrameLayout
         android:id="@+id/main_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="515dp">
+<!--Se le pone un  height menor pq con wrawdcontent se tapa totalmente el floatingbutton-->
+        <!--android:layout_height="483dp-->
 
 <!--TODO Ver si emplementar un selector para que cambien el color del item al ser seleccionado-->
         <ListView
@@ -56,6 +64,7 @@
             android:layout_height="wrap_content"
             tools:listitem="@layout/image_list_item_3"
             android:listSelector="@drawable/listview_background"/>
+
 
         <com.melnykov.fab.FloatingActionButton
             android:id="@+id/fab"
@@ -73,6 +82,17 @@
             fab:fab_colorPressed="@color/md_purple_A100"
             fab:fab_colorRipple="@color/md_amber_900" />
 
+        <!--<android.support.design.widget.FloatingActionButton-->
+            <!--android:id="@+id/fab1"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_marginBottom="20dp"-->
+            <!--android:layout_marginRight="20dp"-->
+            <!--android:src="@android:drawable/ic_dialog_info"-->
+            <!--app:fabSize="mini"-->
+            <!--android:layout_gravity="right|bottom" />-->
 
 
     </FrameLayout>
