@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_brown_100">
+    android:background="@color/md_red_700">
 
     <!-- Esta activity tiene un tema propio-->
 
@@ -20,7 +20,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/md_brown_100"
+        android:background="?colorPrimary"
         android:elevation="4dp"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ToolbarTheme" />
@@ -64,7 +64,7 @@
             android:textStyle="bold"
             android:textColor="@color/md_grey_800"
             android:textSize="22dp"
-            android:background="@color/md_brown_100"
+            android:background="?colorPrimary"
 
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/logoapp"
@@ -79,7 +79,7 @@
             android:textStyle="bold"
             android:textColor="@color/md_grey_800"
             android:textSize="19dp"
-            android:background="@color/md_brown_100"
+            android:background="?colorPrimary"
             android:layout_gravity="bottom"
             android:layout_below="@+id/txt1"
             android:layout_marginLeft="50dp"
@@ -97,7 +97,7 @@
         android:textStyle="bold|italic"
         android:textColor="@android:color/white"
         android:textSize="17dp"
-        android:background="@color/md_brown_100"
+        android:background="?colorPrimary"
         android:id="@+id/textoabout"
 
         android:layout_below="@+id/logoapp"

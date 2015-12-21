@@ -154,7 +154,7 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
 
         lista.setTextFilterEnabled(true);
 
-        lista.setDividerHeight(5);//Líneas más anchas entre los itens de la lista
+        lista.setDividerHeight(3);//Líneas más anchas entre los itens de la lista
         consultar();
 
 

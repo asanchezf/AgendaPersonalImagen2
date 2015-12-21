@@ -240,8 +240,8 @@
             <!--Para separar a los dos botones-->
             <View
                 android:layout_width="5dp"
-                android:layout_height="match_parent"
-                android:background="@android:color/white">
+                android:layout_height="match_parent">
+                <!--android:background="@android:color/white">-->
 
             </View>
 
@@ -264,8 +264,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_below="@+id/botonera"
-            android:background="@android:color/white">
+            android:layout_below="@+id/botonera">
+            <!--android:background="@android:color/white">-->
 
         </View>
 

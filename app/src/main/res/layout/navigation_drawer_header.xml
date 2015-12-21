@@ -15,16 +15,16 @@
 
 
     <!-- Imagen de perfil -->
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/circle_image"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="@dimen/navigation_drawer_header_margin"
-        android:layout_width="78dp"
-        android:layout_height="78dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/loro"
-        app:border_color="@android:color/white"
-        app:border_width="3dp" />
+    <!--<de.hdodenhof.circleimageview.CircleImageView-->
+        <!--android:id="@+id/circle_image"-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_marginTop="@dimen/navigation_drawer_header_margin"-->
+        <!--android:layout_width="78dp"-->
+        <!--android:layout_height="78dp"-->
+        <!--android:scaleType="centerCrop"-->
+        <!--android:src="@drawable/loro"-->
+        <!--app:border_color="@android:color/white"-->
+        <!--app:border_width="3dp" />-->
 
 
     <LinearLayout
@@ -45,7 +45,7 @@
             android:layout_gravity="center"
             android:gravity="center_vertical"
             android:text="@string/desarrollador"
-            android:textColor="@color/md_blue_800"
+            android:textColor="@color/md_orange_A400"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
         <TextView
@@ -54,7 +54,7 @@
             android:layout_gravity="center"
             android:gravity="center_vertical"
             android:text="@string/miemail"
-            android:textColor="@color/md_blue_800"
+            android:textColor="@color/md_orange_A400"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     </LinearLayout>

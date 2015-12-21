@@ -82,18 +82,9 @@
         <ImageView
             android:id="@+id/logoG200"
             android:layout_width="350dp"
-            android:layout_height="120dp"
+            android:layout_height="260dp"
             android:layout_gravity="top|center"
-            android:layout_marginTop="290dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/imagesinit" />
-
-        <ImageView
-            android:id="@+id/imageini"
-            android:layout_width="350dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="180dp"
+            android:layout_marginTop="270dp"
             android:scaleType="centerCrop"
             android:src="@drawable/imagesinit" />
 
@@ -105,7 +96,7 @@
         android:id="@+id/navigation_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="right"
+        android:layout_gravity="left"
         android:fitsSystemWindows="@bool/fitsSystemWindows"
         app:headerLayout="@layout/navigation_drawer_header"
         app:menu="@menu/navigation_drawer_menu"

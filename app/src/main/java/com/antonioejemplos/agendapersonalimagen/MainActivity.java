@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 //drawerLayout.openDrawer(GravityCompat.START);
-                drawerLayout.openDrawer(GravityCompat.END);//Forzamos a que salga por la derecha END. Con START sale por la izquierda
+                drawerLayout.openDrawer(GravityCompat.START);//Forzamos a que salga por la derecha END. Con START sale por la izquierda
                 return true;
 
             case R.id.menu_ver_agenda:
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
                                 menuItem.setChecked(true);
 
                                 //drawerLayout.closeDrawer(GravityCompat.START);
-                                drawerLayout.closeDrawer(GravityCompat.END);//Forzamos a que salga por la derecha END. Con START sale por la izquierda
+                                drawerLayout.closeDrawer(GravityCompat.START);//Forzamos a que salga por la derecha END. Con START sale por la izquierda
                                 Intent intent = new Intent(MainActivity.this, ActivityLista.class);
                                 startActivity(intent);
                                 return true;
@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.item_navigation_drawer_starred://DAR DE ALTA
                                 menuItem.setChecked(true);
                                 //drawerLayout.closeDrawer(GravityCompat.START);
-                                drawerLayout.closeDrawer(GravityCompat.END);//Forzamos a que salga por la derecha END. Con START sale por la izquierda
+                                drawerLayout.closeDrawer(GravityCompat.START);//Forzamos a que salga por la derecha END. Con START sale por la izquierda
 
                                 Intent intent2 = new Intent(MainActivity.this, AltaUsuarios.class);
                                 startActivity(intent2);
@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
                                 menuItem.setChecked(true);
 
                                 //drawerLayout.closeDrawer(GravityCompat.START);
-                                drawerLayout.closeDrawer(GravityCompat.END);//Forzamos a que salga por la derecha END. Con START sale por la izquierda
+                                drawerLayout.closeDrawer(GravityCompat.START);//Forzamos a que salga por la derecha END. Con START sale por la izquierda
 
                                 Intent intentborrar = new Intent(MainActivity.this, BorrarUsuarios.class);
                                 startActivity(intentborrar);
@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.item_navigation_drawer_drafts://IMPORTAR AGENDA DE ANDROID
                                 menuItem.setChecked(true);
                                 //drawerLayout.closeDrawer(GravityCompat.START);
-                                drawerLayout.closeDrawer(GravityCompat.END);//Forzamos a que salga por la derecha END. Con START sale por la izquierda
+                                drawerLayout.closeDrawer(GravityCompat.START);//Forzamos a que salga por la derecha END. Con START sale por la izquierda
 
                                 Intent intent3 = new Intent(MainActivity.this, ImportarContactos.class);
                                 startActivity(intent3);
@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.item_navigation_drawer_maps://Google maps
                                 menuItem.setChecked(true);
                                 //drawerLayout.closeDrawer(GravityCompat.START);
-                                drawerLayout.closeDrawer(GravityCompat.END);//Forzamos a que salga por la derecha END. Con START sale por la izquierda
+                                drawerLayout.closeDrawer(GravityCompat.START);//Forzamos a que salga por la derecha END. Con START sale por la izquierda
 
                                 //////////////////////////////
                               /*  public static void routeTo(Activity activity, String destiny){
