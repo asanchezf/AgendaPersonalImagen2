@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 //import com.videumcorp.desarrolladorandroid.navigatio.R;
 
-import com.antonioejemplos.agendapersonal.R;
+import com.antonioejemplos.agendapersonalimagen.R;
 
 import java.util.ArrayList;
 

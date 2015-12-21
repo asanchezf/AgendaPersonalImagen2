@@ -15,7 +15,7 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.antonioejemplos.agendapersonal.R;
+import com.antonioejemplos.agendapersonalimagen.R;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -191,7 +191,7 @@ public class Contacts_Adapter_Images_Search extends ArrayAdapter<Contactos> impl
             holder.categoria.setImageResource(R.drawable.importado);
         }
 
-
+        contactos.getImageUri();
 
         return view;
     }

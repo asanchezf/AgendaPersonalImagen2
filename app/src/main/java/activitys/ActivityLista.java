@@ -26,7 +26,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.antonioejemplos.agendapersonal.R;
+import com.antonioejemplos.agendapersonalimagen.R;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -46,6 +46,8 @@ import static com.nineoldandroids.view.ViewPropertyAnimator.animate;
 public class ActivityLista extends AppCompatActivity implements OnQueryTextListener, SearchView.OnQueryTextListener,MenuItemCompat.OnActionExpandListener {// -EXTENDS DE LISTACTIVITY---MODIFICACION-1..UPV
 
     private ListView lista;// OBJETO LISTVIEW
+
+
     private int index;//ïndice de la lista. para preservar el scroll; en On onPause y en onResume
     private SQLControlador dbConnection;//CONTIENE LAS CONEXIONES A BBDD (CREADA EN DBHELPER.CLASS) Y LOS M�TODOS INSERT, UPDATE, DELETE, BUSCAR....
     private ArrayList<Contactos> contactos;//COLECCION DE TIPO CONTACTOS (BEAN CON LA MISMA ESTRUTURA DE CAMPOS QUE LA BBDD)
@@ -106,6 +108,7 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         lista = (ListView) findViewById(android.R.id.list);// -----MODIFICACION-2
+
          //lista = (ListView) findViewById(R.id.list);
 
 
@@ -171,7 +174,10 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
                     // Devuelve una Colecci�n.Problema en el orden de recogida
                     // de los campos
                     // Se cambia por otro m�todo que devuelve un cursor...
-                    Cursor c = dbConnection.CursorBuscarUno(id);// Devuelve un Cursor
+                    //Cursor c = dbConnection.CursorBuscarUno(id);// Devuelve un Cursor
+
+                    Cursor c = dbConnection.buscarUnoconImagen(id);
+
 
                     int _id = c.getInt(c.getColumnIndex("_id"));
 
@@ -187,9 +193,19 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
                     int categoria = c.getInt(c.getColumnIndex("Id_Categoria"));
                     String observ = c.getString(c.getColumnIndex("Observaciones"));
 
+                    byte[] imagen= c.getBlob(c.getColumnIndex("Photo"));
+
+
+                    //Comprimimos la imagen para enviarla a otra activity
+                    /*Bitmap bmp= BitmapFactory.decodeByteArray(imagen,0,0);
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    byte[] bytes = stream.toByteArray();
+                    setresult.putExtra("BMP",bytes);
+*/
                     // txtCaja2.setText("" + posicion + " posicion");
 
-                    dbConnection.cerrar();
+                                dbConnection.cerrar();
 
                     // Pasamos datos al formulario en modo visualizar
                     Intent i = new Intent(ActivityLista.this, ModificarUsuarios.class);
@@ -201,6 +217,9 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
 
                     i.putExtra("Id_Categoria", categoria);
                     i.putExtra("Observaciones", observ);
+
+                    i.putExtra("Photo", imagen);
+                    //i.putExtra("Photo", bytes);
 
                     i.putExtra(C_MODO, C_VISUALIZAR);
                     startActivityForResult(i, C_VISUALIZAR);
@@ -386,7 +405,9 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
         dbConnection = new SQLControlador(getApplicationContext());
         dbConnection.abrirBaseDeDatos(1);// Lectura. Solo para ver
 
-        Cursor c = dbConnection.CursorBuscarUno(id);// Devuelve un Cursor
+       // Cursor c = dbConnection.CursorBuscarUno(id);// Devuelve un Cursor
+
+        Cursor c = dbConnection.buscarUnoconImagen(id);
 
         // int _id= c.getInt(c.getColumnIndex("_id"));
         String nombre = c.getString(c.getColumnIndex("Nombre"));
@@ -397,6 +418,8 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
 
         int categoria=c.getInt(c.getColumnIndex("Id_Categoria"));
         String observ = c.getString(c.getColumnIndex("Observaciones"));
+
+        byte[] imagen= c.getBlob(c.getColumnIndex("Photo"));
 
         // txtCaja2.setText("" + posicion + " posicion");
         dbConnection.cerrar();
@@ -411,6 +434,7 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
 
         i.putExtra("Id_Categoria", categoria);
         i.putExtra("Observaciones", observ);
+        i.putExtra("Photo", imagen);
 
         i.putExtra(C_MODO, C_VISUALIZAR);
         startActivityForResult(i, C_VISUALIZAR);
@@ -575,6 +599,7 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
         else{
             txtTotales.setText(getResources().getString(R.string.no_hay_registros));
         }
+
         lista.setAdapter(contactosAdapter_imagenes);
 
         dbConnection.cerrar();
@@ -584,7 +609,9 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
         dbConnection = new SQLControlador(getApplicationContext());
         dbConnection.abrirBaseDeDatos(1);// Lectura. Solo para ver
 
-        Cursor c = dbConnection.CursorBuscarUno(id);// Devuelve un Cursor
+        //Cursor c = dbConnection.CursorBuscarUno(id);// Devuelve un Cursor
+
+        Cursor c = dbConnection.buscarUnoconImagen(id);
 
         int idenviado= c.getInt(c.getColumnIndex("_id"));
         String nombre = c.getString(c.getColumnIndex("Nombre"));
@@ -596,6 +623,7 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
         int Id_Categ=c.getInt(c.getColumnIndex("Id_Categoria"));
         String observ = c.getString(c.getColumnIndex("Observaciones"));
 
+        byte[] imagen= c.getBlob(c.getColumnIndex("Photo"));
         // txtCaja2.setText("" + posicion + " posicion");
         dbConnection.cerrar();
 
@@ -610,6 +638,7 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
 
         i.putExtra("Id_Categoria", Id_Categ);
         i.putExtra("Observaciones", observ);
+        i.putExtra("Photo", imagen);
 
         i.putExtra(C_MODO, C_EDITAR);
         startActivityForResult(i, C_EDITAR);

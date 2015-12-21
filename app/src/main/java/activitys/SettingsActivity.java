@@ -13,7 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.antonioejemplos.agendapersonal.R;
+import com.antonioejemplos.agendapersonalimagen.R;
 
 public class SettingsActivity extends AppCompatActivity {
 

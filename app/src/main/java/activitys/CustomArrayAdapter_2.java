@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 //import com.videumcorp.desarrolladorandroid.navigatio.R;
 
-import com.antonioejemplos.agendapersonal.R;
+import com.antonioejemplos.agendapersonalimagen.R;
 
 import java.util.ArrayList;
 
@@ -91,11 +91,11 @@ public class CustomArrayAdapter_2 extends ArrayAdapter<ContactosBorrar> implemen
             holder.getDescripcion().setText(R.string.categoria4);
         }
 
-//        else if (contactosBorrar.getId_Categoria()==5){
-//            //descripcion.setText("Otro país");
-//            //categoria.setImageResource(R.drawable.mundo);
-//            holder.getDescripcion().setText("Otro país");
-//        }
+        else if (contactosBorrar.getId_Categoria()==5){
+            //descripcion.setText("Otro país");
+            //categoria.setImageResource(R.drawable.mundo);
+            holder.getDescripcion().setText(R.string.categoria5);
+        }
 //
 //
 //        else if (contactosBorrar.getId_Categoria()==6){

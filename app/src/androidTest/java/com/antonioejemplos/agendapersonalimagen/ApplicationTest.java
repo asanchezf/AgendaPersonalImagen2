@@ -1,4 +1,4 @@
-package com.antonioejemplos.agendapersonal;
+package com.antonioejemplos.agendapersonalimagen;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

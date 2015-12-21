@@ -32,13 +32,27 @@
 
         //MODIFICACIONES PARA MATERIAL DESING---------------//
 
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="@dimen/abc_edit_text_inset_top_material"
+
+            android:scaleType="centerCrop"
+            android:id="@+id/imgcontacto"
+            android:src="@drawable/contacto"
+            android:layout_below="@+id/toolbar"
+            android:layout_centerHorizontal="true"
+            android:onClick="onImgClick"
+            />
+
         <EditText
             android:id="@+id/nombre"
             android:layout_width="@dimen/abc_search_view_preferred_width"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
 
-            android:layout_below="@+id/toolbar"
+            android:layout_below="@+id/imgcontacto"
 
 
             android:hint="@string/Name"

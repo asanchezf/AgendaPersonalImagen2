@@ -21,7 +21,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.antonioejemplos.agendapersonal.R;
+import com.antonioejemplos.agendapersonalimagen.R;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -114,7 +114,7 @@ public class ImportarContactos extends AppCompatActivity {
 				new DialogInterface.OnClickListener() {
 
 					public void onClick(DialogInterface dialog, int boton) {
-
+						barraProgreso.setVisibility(View.VISIBLE);
 						// ---Hacer alg�n trabajo en el hilo de fondo---
 						new Thread(new Runnable() {
 							public void run() {
@@ -187,9 +187,9 @@ public class ImportarContactos extends AppCompatActivity {
 	private void importar(){
 		/*
 		* Trae todos los contacto de la agenda de Android y los inserta en la BB.DD. de la app.
-		* Les asigna categoría 5(sin categoria).
-		*
-		*
+		* Le asigna categoría 5(sin categoria).
+		*Le asigna importado=1
+		*Le asigna sincronizado=0--En esta app no está implementada la funcionalidad de sincronizar con servidor...
 		*
 		* */
 
@@ -219,6 +219,10 @@ public class ImportarContactos extends AppCompatActivity {
 
 		 String idgrupo="";
 		 String observaciones="";
+
+		int importado=1;
+		int sincronizado=0;
+
 		 
 		
 		 
@@ -475,7 +479,7 @@ public class ImportarContactos extends AppCompatActivity {
 	 							
 	 							
 //???????????	                    
-	                     contactos=new Contactos(id_convert,name,apellidos,direccion, phone,email,categoria,observaciones);
+	                     contactos=new Contactos(id_convert,name,apellidos,direccion, phone,email,categoria,observaciones,importado,sincronizado);
 	  	            	ArrayListcontactos.add(contactos);
 	 
 	                    // Get note.......==========================

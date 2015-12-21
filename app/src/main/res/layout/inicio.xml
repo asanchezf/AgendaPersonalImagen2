@@ -49,7 +49,7 @@
     <!--android:id="@+id/list""-->
     <!-- android:text="@string/titulo_activity_lista"-->
 
-    <FrameLayout
+    <android.support.design.widget.CoordinatorLayout
         android:id="@+id/main_content"
         android:layout_width="match_parent"
         android:layout_height="515dp">
@@ -82,20 +82,24 @@
             fab:fab_colorPressed="@color/md_purple_A100"
             fab:fab_colorRipple="@color/md_amber_900" />
 
+
+
+
         <!--<android.support.design.widget.FloatingActionButton-->
-            <!--android:id="@+id/fab1"-->
+            <!--android:id="@+id/fab"-->
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_marginBottom="20dp"-->
-            <!--android:layout_marginRight="20dp"-->
-            <!--android:src="@android:drawable/ic_dialog_info"-->
-            <!--app:fabSize="mini"-->
-            <!--android:layout_gravity="right|bottom" />-->
+            <!--android:layout_gravity="end|bottom"-->
+            <!--android:src="@drawable/ic_add"-->
+            <!--app:borderWidth="0dp"-->
+            <!--app:elevation="6dp"-->
+            <!--android:layout_marginBottom="@dimen/fab_margin"-->
+            <!--android:layout_marginRight="@dimen/fab_margin"/>-->
 
 
-    </FrameLayout>
+
+
+    </android.support.design.widget.CoordinatorLayout >
 
 
 

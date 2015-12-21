@@ -4,8 +4,15 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 
-import com.antonioejemplos.agendapersonal.R;
+import com.antonioejemplos.agendapersonalimagen.R;
 
 import java.sql.SQLException;
 
@@ -87,6 +94,57 @@ public class Comunes {
         dialogEliminar.setNegativeButton(android.R.string.no, null);
 
         dialogEliminar.show();
+    }
+
+
+    //Recibe una imagen y la redimensiona redondeando los bordes
+    //Se ha modificado pq originariamente tenía que recibir un Drawable
+    public static Bitmap getRoundedCornerBitmap( Bitmap drawable, boolean square) {
+        int width = 0;
+        int height = 0;
+
+       // Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap() ;
+        Bitmap bitmap =drawable;
+
+        if(square){
+            if(bitmap.getWidth() < bitmap.getHeight()){
+                width = bitmap.getWidth();
+                height = bitmap.getWidth();
+            } else {
+                width = bitmap.getHeight();
+                height = bitmap.getHeight();
+            }
+        } else {
+            height = bitmap.getHeight();
+            width = bitmap.getWidth();
+        }
+
+        Bitmap output = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+
+        final int color = 0xff424242;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, width, height);
+        final RectF rectF = new RectF(rect);
+        final float roundPx = 90;//360 es totalmente redonda
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+
+        return output;
+    }
+
+    public static Bitmap scaleDownBitmap(Bitmap photo, int newHeight, Context context) {
+        final float densityMultiplier = context.getResources().getDisplayMetrics().density;
+        int h = (int) (newHeight * densityMultiplier);
+        int w = (int) (h * photo.getWidth() / ((double) photo.getHeight()));
+        photo = Bitmap.createScaledBitmap(photo, w, h, true);
+        return photo;
     }
 
 }

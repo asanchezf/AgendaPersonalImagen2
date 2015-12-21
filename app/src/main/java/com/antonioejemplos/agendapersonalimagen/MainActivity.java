@@ -1,4 +1,4 @@
-package com.antonioejemplos.agendapersonal;
+package com.antonioejemplos.agendapersonalimagen;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -40,6 +40,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Control para otras versiones
+//        if (Build.VERSION.SDK_INT < 19) {
+//
+//            getWindow().setContentView(R.layout.activity_main_bis);
+//        }else {
+//            getWindow().setContentView(R.layout.activity_main);
+//
+//        }
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 

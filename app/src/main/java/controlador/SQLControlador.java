@@ -33,20 +33,19 @@ public class SQLControlador {
 
 	public static final String C_COLUMNA_CATEGORIA = "Id_Categoria";
 	public static final String C_COLUMNA_OBSERVACIONES = "Observaciones";
+	public static final String C_COLUMNA_IMPORTADO = "Importado";
 
+	public static final String C_COLUMNA_PHOTO = "Photo";
 
 	//private Resources resources;//para traer directamente los recursos al código java...
 
 
 
     public static final String IMPORTADO_OBSERVACIONES = "Contacto importado desde la agenda de Android el día: ";
-    //public static final String IMPORTADO_OBSERVACIONES =(getResources().getString(R.string.agenda_texto_vacio));
-    //public static final String IMPORTADO_OBSERVACIONES ="@style/observaciones_importados";
 
-   // public static final String IMPORTADO_OBSERVACIONES ="";
-
-    private String importado_observaciones;
     public static final String EMAIL_POR_DEFECTO = "email@gmail.com";
+
+	public static final int  VALOR_IMPORTADO = 1;
 	
 	public SQLControlador(Context c) {
 		super();
@@ -99,6 +98,34 @@ public class SQLControlador {
 
 		pst.bindLong(6, Id_Categ);
 		pst.bindString(7, observa);
+		pst.execute();
+
+	}
+
+	public void insertarUsuarioconImagen(String Nombre, String Apellidos,
+								String Direccion, String Telefono, String Email, long Id_Categ,
+								String observa, byte[] imagen) {
+
+
+		if(Email.toString().equals("")){
+			Email="Email no disponible";
+		}
+
+		SQLiteStatement pst = db
+				.compileStatement("INSERT INTO Contactos (Nombre, Apellidos, Direccion, Telefono, Email, Id_Categoria, Observaciones,Photo) VALUES (?,?,?,?,?,?,?,?)");
+		pst.bindString(1, Nombre);
+		pst.bindString(2, Apellidos);
+		pst.bindString(3, Direccion);
+		pst.bindString(4, Telefono);
+		pst.bindString(5, Email);
+
+		pst.bindLong(6, Id_Categ);
+		pst.bindString(7, observa);
+
+		//Controlamos si la imagen viene  null para que no se lleve valores erróneos
+		if (imagen!=null) {
+			pst.bindBlob(8, imagen);
+		}
 		pst.execute();
 
 	}
@@ -217,7 +244,10 @@ public class SQLControlador {
 			valores.put(C_COLUMNA_TELEFONO, telefono);
 			valores.put(C_COLUMNA_EMAIL, email);
 			valores.put(C_COLUMNA_CATEGORIA, categoria);
+
 			valores.put(C_COLUMNA_OBSERVACIONES, IMPORTADO_OBSERVACIONES+fecha);
+
+			valores.put(C_COLUMNA_IMPORTADO, VALOR_IMPORTADO);	//Insertamos un 1 en el campo Importado
 			db.insert(C_TABLA, null, valores);
 			}
 			
@@ -359,6 +389,39 @@ public class SQLControlador {
 		// db.update("Contactos", values, "_id=_id", null);
 	}
 
+	public void modificarContactoconImagen(int id, String Nombre, String Apellidos,
+								  String Direccion, String Telefono, String Email, int Id_Categ,
+								  String Observaciones,byte[] imagen) {
+
+		// db.execSQL("UPDATE Contactos SET Nombre=Nombre,nombre='Nombre' WHERE codigo=_id ");
+
+		ContentValues values = new ContentValues();
+		// values.put(C_COLUMNA_ID,_id);//Es la Primary key...
+		values.put(C_COLUMNA_NOMBRE, Nombre);
+		values.put(C_COLUMNA_APELLIDOS, Apellidos);
+		values.put(C_COLUMNA_DIRECCION, Direccion);
+		values.put(C_COLUMNA_TELEFONO, Telefono);
+		values.put(C_COLUMNA_EMAIL, Email);
+
+		values.put(C_COLUMNA_CATEGORIA, Id_Categ);
+		values.put(C_COLUMNA_OBSERVACIONES, Observaciones);
+
+		//Controlamos que la imagen no venga a null
+		if(imagen!=null) {
+			values.put(C_COLUMNA_PHOTO, imagen);
+		}
+		// String where = "_id=?";//Cla�sula where
+		String where = C_COLUMNA_ID + " = " + id;
+
+		// String[] args = {"_id" };//Valores adicionales a la cla�sula where...
+
+		Log.i(this.getClass().toString(), "_id" + "UPDATE_2" + id + "where "
+				+ where);
+		// db.update(C_TABLA, values, "_id =" + id, null);
+		db.update(C_TABLA, values, where, null);
+		// db.update("Contactos", values, "_id=_id", null);
+	}
+
 	// Devuelve un ArrayList de Contactos con los datos que hay en BBDD
 	public ArrayList BuscarTodos() {
 		Contactos contactos;
@@ -372,7 +435,7 @@ public class SQLControlador {
 
 				contactos = new Contactos(rs.getInt(0), rs.getString(1),
 						rs.getString(2), rs.getString(3), rs.getString(4),
-						rs.getString(5), rs.getInt(6), rs.getString(7));
+						rs.getString(5), rs.getInt(6), rs.getString(7), rs.getInt(8), rs.getInt(9),rs.getBlob(10));
 
 				arraList.add(contactos);
 
@@ -418,7 +481,7 @@ public class SQLControlador {
 		// Nombre, Apellidos, Direccion, Telefono, Email
 		Cursor rs = db
 				.rawQuery(
-						"Select _id, Nombre, Apellidos, Direccion, Telefono, Email, Id_Categoria, Observaciones from Contactos where _id="
+						"Select _id, Nombre, Apellidos, Direccion, Telefono, Email, Id_Categoria, Observaciones, Importado, Sincronizado from Contactos where _id="
 								+ id, null);
 
 		// //Nos movemos al primer registro de la consulta
@@ -437,7 +500,7 @@ public class SQLControlador {
 
 				contactos = new Contactos(rs.getInt(0), rs.getString(1),
 						rs.getString(2), rs.getString(3), rs.getString(4),
-						rs.getString(5), rs.getInt(6), rs.getString(7));
+						rs.getString(5), rs.getInt(6), rs.getString(7), rs.getInt(8), rs.getInt(9));
 				arraList.add(contactos);
 
 				// int _id= rs.getInt(rs.getColumnIndex("_id"));
@@ -464,6 +527,28 @@ public class SQLControlador {
 		Cursor rs = db
 				.rawQuery(
 						"Select _id, Nombre, Apellidos, Direccion, Telefono, Email, Id_Categoria, Observaciones from Contactos where _id="
+								+ id, null);
+		// Cursor c = db.query( true, C_TABLA, columnas, C_COLUMNA_ID + "=" +
+		// id, null, null, null, null, null);
+
+		// Nos movemos al primer registro de la consulta
+		if (rs != null) {
+			rs.moveToFirst();
+		}
+
+		// rs.close();
+
+		return rs;
+
+	}
+
+
+	// Devuelve un cursor
+	public Cursor buscarUnoconImagen(long id) {
+
+		Cursor rs = db
+				.rawQuery(
+						"Select _id, Nombre, Apellidos, Direccion, Telefono, Email, Id_Categoria, Observaciones,Photo from Contactos where _id="
 								+ id, null);
 		// Cursor c = db.query( true, C_TABLA, columnas, C_COLUMNA_ID + "=" +
 		// id, null, null, null, null, null);
@@ -512,8 +597,9 @@ public class SQLControlador {
 		// SQLiteDatabase db = this.getReadableDatabase();// Abrimos en modo
 		// lectura.
 		// Nombre, Apellidos, Direccion, Telefono, Email new String[] { nombre });
-		
-		String query="Select * from Contactos where Nombre= ?";
+
+		//DEVUELVE LOS QUE YA HAYAN PODIDO SER IMPORTADO Y COINDIDAN EN NOMBRE PARA QUE AL COMPARAR NO LOS VUELVA A INSERTAR....
+		String query="Select * from Contactos where Nombre= ? and Importado=1";
 		String[] args=new String[] {nombre};
 		Cursor rs = db.rawQuery(query, args);
 		

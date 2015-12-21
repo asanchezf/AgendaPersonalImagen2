@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.antonioejemplos.agendapersonal" >
+    package="com.antonioejemplos.agendapersonalimagen" >
 
     <application
         android:allowBackup="true"
@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name="com.antonioejemplos.agendapersonalimagen.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,19 +22,19 @@
             android:name="activitys.SettingsActivity"
             android:theme="@style/AppAgendaTema"
             android:label="@string/title_activity_settings"
-            android:parentActivityName="com.antonioejemplos.agendapersonal.MainActivity">
+            android:parentActivityName="com.antonioejemplos.agendapersonalimagen.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value="com.antonioejemplos.agendapersonalimagen.MainActivity" />
         </activity>
 
         <activity
             android:name="activitys.ActivityLista"
             android:label="@string/app_name"
-            android:parentActivityName="com.antonioejemplos.agendapersonal.MainActivity" >
+            android:parentActivityName="com.antonioejemplos.agendapersonalimagen.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.antonioejemplos.agendapersonal.MainActivity" />
+                android:value="com.antonioejemplos.agendapersonalimagen.MainActivity" />
             <!-- - Autogenera botón para regresar a la activity padre -->
 
         </activity>
@@ -97,5 +97,8 @@
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

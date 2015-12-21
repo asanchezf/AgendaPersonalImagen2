@@ -4,10 +4,14 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.ParcelFileDescriptor;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
@@ -18,13 +22,19 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.antonioejemplos.agendapersonal.R;
+import com.antonioejemplos.agendapersonalimagen.R;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.IOException;
 import java.sql.SQLException;
 
 import controlador.SQLControlador;
@@ -65,11 +75,21 @@ public class ModificarUsuarios extends AppCompatActivity {
     //Añadimos la toolbar
 	private Toolbar toolbar;
 
+	//Para agregar imagen a los contactos
+	private ImageView img;
+	private int requestCode=1;//Notifiación al haber asignado una imagen al contacto...
+	private String APP_DIRECTORY = "myPictureApp/";
+	private String MEDIA_DIRECTORY = APP_DIRECTORY + "media";
+	private String TEMPORAL_PICTURE_NAME = "temporal.jpg";
+	private final int PHOTO_CODE = 100;
+	private final int SELECT_PICTURE = 200;
+	private byte[] photo;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_modificar_usuarios);
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		//setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 		nombre = (EditText) findViewById(R.id.nombre);
 		apellidos = (EditText) findViewById(R.id.apellidos);
@@ -93,6 +113,9 @@ public class ModificarUsuarios extends AppCompatActivity {
 
 		cancelar = (Button) findViewById(R.id.boton_cancelar);
 		guardar = (Button) findViewById(R.id.boton_guardar);
+
+		img=(ImageView)findViewById(R.id.imgcontacto);
+
 
 		//Añadimos la toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -162,6 +185,17 @@ public class ModificarUsuarios extends AppCompatActivity {
 //        }
 
 		observaciones.setText(bundle.getString("Observaciones"));
+		photo=(bundle.getByteArray("Photo"));
+
+
+
+
+		if ( photo!=null ) {
+			ByteArrayInputStream imageStream = new ByteArrayInputStream(photo);
+			Bitmap imgagenrecogida = BitmapFactory.decodeStream(imageStream);
+			//img.setImageBitmap(imgagenrecogida);
+			img.setImageBitmap(Comunes.getRoundedCornerBitmap(imgagenrecogida,true));
+		}
 
 		// Intent intent = getIntent();
 		// Bundle extra = intent.getExtras();
@@ -200,17 +234,17 @@ public class ModificarUsuarios extends AppCompatActivity {
 																			// un
 																			// listener
 				int Id_Categ=0;
-				if (radio1.isChecked()==true) {
+				if (radio1.isChecked()) {
 					Id_Categ=1;
 					
 				}
-				else if(radio2.isChecked()==true)   {
+				else if(radio2.isChecked())   {
 					Id_Categ=2;
 				}
-				else if(radio3.isChecked()==true)   {
+				else if(radio3.isChecked())   {
 					Id_Categ=3;
 				}
-				else if(radio4.isChecked()==true)   {
+				else if(radio4.isChecked())   {
 					Id_Categ=4;
 				}
 
@@ -225,10 +259,17 @@ public class ModificarUsuarios extends AppCompatActivity {
 				
 				try {
 					dbConnection.abrirBaseDeDatos(2);//objeto SQLcontrolador
-					dbConnection.ModificarContacto(id_recogido, nombre
+
+//					dbConnection.ModificarContacto(id_recogido, nombre
+//							.getText().toString(), apellidos.getText()
+//							.toString(), direc.getText().toString(), telefono
+//							.getText().toString(), email.getText().toString(),Id_Categ,observaciones.getText().toString());
+
+
+					dbConnection.modificarContactoconImagen(id_recogido, nombre
 							.getText().toString(), apellidos.getText()
 							.toString(), direc.getText().toString(), telefono
-							.getText().toString(), email.getText().toString(),Id_Categ,observaciones.getText().toString());
+							.getText().toString(), email.getText().toString(),Id_Categ,observaciones.getText().toString(),photo);
 
 					// Log.i(this.getClass().toString(), id_recogido +
 					// "UPDATE_1" + "  "+ nombre.getText().toString() );
@@ -265,6 +306,177 @@ public class ModificarUsuarios extends AppCompatActivity {
 		
 		
 
+	}
+
+	//Gestionamos el evento del ImageView
+	public void onImgClick(View view) {
+		Intent intent = null;
+		//Se controla la versión de android...
+		if (Build.VERSION.SDK_INT < 19) {
+			//Menor que KIT-KAT
+			intent = new Intent();
+			intent.setAction(Intent.ACTION_GET_CONTENT);//Permisos para acceder a los contenidos..
+			intent.setType("image/*");//Permiso para los contenidos de tipo imagen con la extensión que sea
+			//startActivityForResult(intent, requestCode);
+
+
+			final CharSequence[] options = {"Tomar foto", "Elegir de galeria", "Cancelar"};
+			final AlertDialog.Builder builder = new AlertDialog.Builder(ModificarUsuarios.this);
+			builder.setTitle("Elige una opcion:");
+			builder.setItems(options, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int seleccion) {
+					if (options[seleccion] == "Tomar foto") {
+						openCamera();//Abriendo la cámara
+					} else if (options[seleccion] == "Elegir de galeria") {
+						Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+						intent.setType("image/*");
+						startActivityForResult(intent.createChooser(intent, "Selecciona app de imagen"), SELECT_PICTURE);
+					} else if (options[seleccion] == "Cancelar") {
+						dialog.dismiss();
+					}
+				}
+			});
+			builder.show();
+		} else {
+			//Para Kit-kat o superior y abriendo cualquier directorio que contenga imágenes
+			/*intent=new Intent(Intent.ACTION_OPEN_DOCUMENT);//Permisos para acceder a contenidos
+			intent.addCategory(Intent.CATEGORY_OPENABLE);//Archivos abiertos
+			intent.setType("image*//*");//Permiso para los contenidos de tipo imagen con la extensión que sea
+			startActivityForResult(intent, requestCode);*/
+
+			//Para Kit-kat o superior
+			final CharSequence[] options = {"Tomar foto", "Elegir de galeria", "Cancelar"};
+			final AlertDialog.Builder builder = new AlertDialog.Builder(ModificarUsuarios.this);
+			builder.setTitle("Elige una opcion:");
+			builder.setItems(options, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int seleccion) {
+					if(options[seleccion] == "Tomar foto"){
+						openCamera();//Abriendo la cámara
+					}else if (options[seleccion] == "Elegir de galeria") {
+						Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+						intent.setType("image/*");
+						startActivityForResult(intent.createChooser(intent, "Selecciona app de imagen"), SELECT_PICTURE);
+					}else if(options[seleccion] == "Cancelar"){
+						dialog.dismiss();
+					}
+				}
+			});
+			builder.show();
+
+			/**
+			 * Para controlar el tipo de respuesta que se recibe al elegir una imagen para el contacto
+			 */
+//				@Override
+//				protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//					super.onActivityResult(requestCode, resultCode, data);
+//
+//					if (resultCode == RESULT_OK && requestCode == requestCode) {//Valor 1
+//						img.setImageURI(data.getData());
+//						//Se utiliza el atributo TAG para almacenar la URI al archivo seleccionado
+//						img.setTag(data.getData());
+//
+//					}
+//
+//
+//				}
+
+
+		}
+	}
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		switch (requestCode){
+			case PHOTO_CODE:
+				if(resultCode == RESULT_OK){
+					String dir =  Environment.getExternalStorageDirectory() + File.separator
+							+ MEDIA_DIRECTORY + File.separator + TEMPORAL_PICTURE_NAME;
+					decodeBitmap(dir);
+
+					Bitmap bitmap;
+					bitmap = BitmapFactory.decodeFile(dir);//Devuelve un bitmap a partir de la imagen que ha grabado la cámara y de su url
+					photo=DbBitmapUtility.getBytes(bitmap);//en formato comprimido
+
+				}
+				break;
+
+			case SELECT_PICTURE:
+				if(resultCode == RESULT_OK){
+					Uri path = data.getData();
+					img.setImageURI(path);
+
+					try {
+						Bitmap imagen = getBitmapFromUri (path);//Devuelve una imagen a partir de una URI
+						photo=DbBitmapUtility.getBytes(imagen);//Devuelve imagen comprimida
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+
+
+
+				}
+				break;
+		}
+
+		//Para que muestre la imagen tratada segun el método getRoundedCornerBitmap
+		if ( photo!=null ) {
+			ByteArrayInputStream imageStream = new ByteArrayInputStream(photo);
+			Bitmap imgagenrecogida = BitmapFactory.decodeStream(imageStream);
+			//img.setImageBitmap(imgagenrecogida);
+			img.setImageBitmap(Comunes.getRoundedCornerBitmap(imgagenrecogida,true));
+		}
+
+	}
+
+	public static class DbBitmapUtility {
+
+		// convertir  de mapa de bits de la matriz de bytes
+		public static byte[] getBytes(Bitmap bitmap) {
+			ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream);
+			return stream.toByteArray();
+		}
+
+		// convert from byte array to bitmap
+		public static Bitmap getImage(byte[] image) {
+			return BitmapFactory.decodeByteArray(image, 0, image.length);
+		}
+	}
+
+	//DEVUELVE UNA IMAGEN A PARTIR DE UNA URI
+	private Bitmap getBitmapFromUri ( Uri uri ) throws IOException {
+		ParcelFileDescriptor parcelFileDescriptor =
+				getContentResolver().openFileDescriptor(uri, "r" );
+		FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+		Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+		parcelFileDescriptor.close();
+		return image;
+	}
+
+
+	private void decodeBitmap(String dir) {
+		Bitmap bitmap;
+		bitmap = BitmapFactory.decodeFile(dir);
+
+		img.setImageBitmap(bitmap);
+	}
+
+
+	private void openCamera() {
+		File file = new File(Environment.getExternalStorageDirectory(), MEDIA_DIRECTORY);
+		file.mkdirs();
+
+		String path = Environment.getExternalStorageDirectory() + File.separator
+				+ MEDIA_DIRECTORY + File.separator + TEMPORAL_PICTURE_NAME;
+
+		File newFile = new File(path);
+
+		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(newFile));
+		startActivityForResult(intent, PHOTO_CODE);
 	}
 
 
@@ -352,6 +564,9 @@ public class ModificarUsuarios extends AppCompatActivity {
 //        radio6.setEnabled(opcion);
 
 		observaciones.setEnabled(opcion);
+
+
+		img.setEnabled(opcion);
 		
 		// Controlamos visibilidad de botonera
 		LinearLayout v = (LinearLayout) findViewById(R.id.botonera);
