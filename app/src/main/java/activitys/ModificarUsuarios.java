@@ -25,7 +25,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.antonioejemplos.agendapersonalimagen.R;
@@ -51,7 +50,7 @@ public class ModificarUsuarios extends AppCompatActivity {
 	private EditText telefono;
 	private EditText email;
 	
-	private Spinner categoria;
+	//private Spinner categoria;
 	
 	private RadioButton radio1,radio2,radio3,radio4;
 			//,radio5,radio6;
@@ -77,7 +76,7 @@ public class ModificarUsuarios extends AppCompatActivity {
 
 	//Para agregar imagen a los contactos
 	private ImageView img;
-	private int requestCode=1;//Notifiación al haber asignado una imagen al contacto...
+	//private int requestCode=1;//Notifiación al haber asignado una imagen al contacto...
 	private String APP_DIRECTORY = "myPictureApp/";
 	private String MEDIA_DIRECTORY = APP_DIRECTORY + "media";
 	private String TEMPORAL_PICTURE_NAME = "temporal.jpg";
@@ -397,7 +396,11 @@ public class ModificarUsuarios extends AppCompatActivity {
 					decodeBitmap(dir);
 
 					Bitmap bitmap;
-					bitmap = BitmapFactory.decodeFile(dir);//Devuelve un bitmap a partir de la imagen que ha grabado la cámara y de su url
+
+					//bitmap = BitmapFactory.decodeFile(dir);//Devuelve un bitmap a partir de la imagen que ha grabado la cámara y de su url
+					File imgFile = new  File(dir);
+					bitmap=Comunes.decodeFile(imgFile);//Llamamos a un método incluido en Comunes que gestiona mejor la memoria del bitmap que devuelve....
+
 					photo=DbBitmapUtility.getBytes(bitmap);//en formato comprimido
 
 				}

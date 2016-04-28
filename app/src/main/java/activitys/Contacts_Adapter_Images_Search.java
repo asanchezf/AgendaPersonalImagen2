@@ -2,8 +2,11 @@ package activitys;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.TextAppearanceSpan;
@@ -17,6 +20,7 @@ import android.widget.TextView;
 
 import com.antonioejemplos.agendapersonalimagen.R;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -40,7 +44,8 @@ public class Contacts_Adapter_Images_Search extends ArrayAdapter<Contactos> impl
     private String itemValue = "";//Nombre completo que aparece en el textview del nombre
 
     private final String noTieneImail="Email no disponible";//Se trae por defecto al importar contactos o al dar de alta
-
+    private byte[] photo;
+    private Bitmap imagenRedondeada;
 
     public Contacts_Adapter_Images_Search(ActivityLista activity, ArrayList<Contactos> friendList) {
 
@@ -101,6 +106,7 @@ public class Contacts_Adapter_Images_Search extends ArrayAdapter<Contactos> impl
             holder.subtitulo = (TextView) view.findViewById(R.id.text2);
             holder.descripcion = (TextView) view.findViewById(R.id.text3);
             holder.categoria = (ImageView) view.findViewById(R.id.category);
+
             holder.telefono = (TextView) view.findViewById(R.id.text4);
 
             holder.iconoEmail=(ImageView)view.findViewById(R.id.imageView2);
@@ -168,30 +174,96 @@ public class Contacts_Adapter_Images_Search extends ArrayAdapter<Contactos> impl
                 * valorar posibilidad de crear otra tabla...
         * */
 
-        if(contactos.getId_Categoria()==1){
+        if(contactos.getId_Categoria()==1) {
 
             holder.descripcion.setText(R.string.categoria1);
-            holder.categoria.setImageResource(R.drawable.image1);
+            //holder.categoria.setImageResource(R.drawable.companeros);
+
+            //Si tiene fotografía...
+            if (contactos.getImageUri() != null)
+            {
+                //photo=contactos.getImageUri();
+               // new ConvertirBitmap().execute(photo);
+
+                ByteArrayInputStream imageStream = new ByteArrayInputStream(contactos.getImageUri());
+                Bitmap imgagenrecogida = BitmapFactory.decodeStream(imageStream);
+                //img.setImageBitmap(imgagenrecogida);
+                //holder.categoria.setImageBitmap(Comunes.getRoundedCornerBitmap(imgagenrecogida,true));//Se comenta pq a veces devuelve errores de memoria
+                holder.categoria.setImageBitmap(imgagenrecogida);
+            }
+
+         else
+            {holder.categoria.setImageResource(R.drawable.image1);}
         }
-        else if (contactos.getId_Categoria()==2){
+
+
+        else if (contactos.getId_Categoria()==2) {
             holder.descripcion.setText(R.string.categoria2);
-            holder.categoria.setImageResource(R.drawable.wsh2);
+            //holder.categoria.setImageResource(R.drawable.companeros);
 
-        }else if (contactos.getId_Categoria()==3){
+            //Si tiene fotografía...
+            if (contactos.getImageUri() != null) {
+                ByteArrayInputStream imageStream = new ByteArrayInputStream(contactos.getImageUri());
+                Bitmap imgagenrecogida = BitmapFactory.decodeStream(imageStream);
+                //img.setImageBitmap(imgagenrecogida);
+                //holder.categoria.setImageBitmap(Comunes.getRoundedCornerBitmap(imgagenrecogida, true));
+                holder.categoria.setImageBitmap(imgagenrecogida);
+            } else
+            {holder.categoria.setImageResource(R.drawable.wsh2);}
+
+        }
+
+        else if (contactos.getId_Categoria()==3){
             holder.descripcion.setText(R.string.categoria3);
-            holder.categoria.setImageResource(R.drawable.companeros);
 
-        }else if (contactos.getId_Categoria()==4){
+            //holder.categoria.setImageResource(R.drawable.companeros);
+            //Si tiene fotografía...
+            if (contactos.getImageUri() != null) {
+                ByteArrayInputStream imageStream = new ByteArrayInputStream(contactos.getImageUri());
+                Bitmap imgagenrecogida = BitmapFactory.decodeStream(imageStream);
+                //img.setImageBitmap(imgagenrecogida);
+                //holder.categoria.setImageBitmap(Comunes.getRoundedCornerBitmap(imgagenrecogida, true));
+                holder.categoria.setImageBitmap(imgagenrecogida);
+            } else
+            {holder.categoria.setImageResource(R.drawable.companeros);}
+
+        }
+
+
+
+        else if (contactos.getId_Categoria()==4){
             holder.descripcion.setText(R.string.categoria4);
-            holder.categoria.setImageResource(R.drawable.otros);
+            //holder.categoria.setImageResource(R.drawable.companeros);
+
+            //Si tiene fotografía...
+            if (contactos.getImageUri() != null) {
+                ByteArrayInputStream imageStream = new ByteArrayInputStream(contactos.getImageUri());
+                Bitmap imgagenrecogida = BitmapFactory.decodeStream(imageStream);
+                //img.setImageBitmap(imgagenrecogida);
+                //holder.categoria.setImageBitmap(Comunes.getRoundedCornerBitmap(imgagenrecogida, true));
+                holder.categoria.setImageBitmap(imgagenrecogida);
+            } else
+            {holder.categoria.setImageResource(R.drawable.otros);}
+
+
         }
 
         else if (contactos.getId_Categoria()==5){
             holder.descripcion.setText(R.string.categoria5);
-            holder.categoria.setImageResource(R.drawable.importado);
+            //holder.categoria.setImageResource(R.drawable.companeros);
+
+            //Si tiene fotografía...
+            if (contactos.getImageUri() != null) {
+                ByteArrayInputStream imageStream = new ByteArrayInputStream(contactos.getImageUri());
+                Bitmap imgagenrecogida = BitmapFactory.decodeStream(imageStream);
+                //img.setImageBitmap(imgagenrecogida);
+                //holder.categoria.setImageBitmap(Comunes.getRoundedCornerBitmap(imgagenrecogida, true));
+                holder.categoria.setImageBitmap(imgagenrecogida);
+            } else
+            {holder.categoria.setImageResource(R.drawable.importado);}
         }
 
-        contactos.getImageUri();
+        //contactos.getImageUri();
 
         return view;
     }
@@ -218,6 +290,32 @@ public class Contacts_Adapter_Images_Search extends ArrayAdapter<Contactos> impl
         TextView telefono;
 
         ImageView iconoEmail;
+
+    }
+
+    public class ConvertirBitmap extends AsyncTask<byte[],Integer,Bitmap>{
+            //private  byte[] foto;
+            protected Bitmap imagenRetocada;
+
+        public ConvertirBitmap(Bitmap imagenRetocada) {
+            this.imagenRetocada = imagenRetocada;
+        }
+
+        @Override
+        protected Bitmap doInBackground(byte[]... params) {
+
+            //foto=byte;
+
+            ByteArrayInputStream imageStream = new ByteArrayInputStream(photo);
+            Bitmap imgagenrecogida = BitmapFactory.decodeStream(imageStream);
+            //holder.categoria.setImageBitmap(Comunes.getRoundedCornerBitmap(imgagenrecogida,true));//Se comenta pq a veces devuelve errores de memoria
+            imagenRedondeada=Comunes.getRoundedCornerBitmap(imgagenrecogida,true);
+
+
+            return imagenRedondeada;
+        }
+
+
 
     }
 

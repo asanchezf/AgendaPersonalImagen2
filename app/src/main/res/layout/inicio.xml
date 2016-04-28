@@ -40,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:background="@color/md_red_200"
+        android:background="@color/md_red_400"
         android:gravity="center"
         android:text=""
         android:textColor="#FFFFFF"

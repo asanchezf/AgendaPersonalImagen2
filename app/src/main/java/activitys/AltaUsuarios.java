@@ -4,7 +4,6 @@ package activitys;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -24,7 +23,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.antonioejemplos.agendapersonalimagen.R;
@@ -50,7 +48,7 @@ public class AltaUsuarios extends AppCompatActivity {
 	private EditText telefono;
 	private EditText email;
 	
-	private Spinner categoria;
+	//private Spinner categoria;
 	
 	private RadioButton radio1,radio2,radio3,radio4,radio5,radio6;
 	private EditText observaciones;
@@ -59,15 +57,15 @@ public class AltaUsuarios extends AppCompatActivity {
 	private Button guardar;
 	
 	private SQLControlador Connection;
-	private SQLiteDatabase db;
+	//private SQLiteDatabase db;
 	
-	private boolean validar=true;
+	//private boolean validar=true;
 
 	private Toolbar toolbar;
 
 	//Para agregar imagen a los contactos
 	private ImageView img;
-	private int requestCode=1;//Notifiación al haber asignado una imagen al contacto...
+	//private int requestCode=1;//Notifiación al haber asignado una imagen al contacto...
 	private String APP_DIRECTORY = "myPictureApp/";
 	private String MEDIA_DIRECTORY = APP_DIRECTORY + "media";
 	private String TEMPORAL_PICTURE_NAME = "temporal.jpg";
@@ -75,49 +73,57 @@ public class AltaUsuarios extends AppCompatActivity {
 	private final int SELECT_PICTURE = 200;
 	private byte[] photo;
 
+	//Para el botón FloatingActionButton
+	//Instancia global del FAB
+	//com.melnykov.fab.FloatingActionButton fab;
+	//private static final int DURATION = 150;//duración animación FAB
+
 
 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_alta_usuarios_material);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_alta_usuarios_material);
 
-		//setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-		nombre=(EditText) findViewById(R.id.nombre);
-		apellidos=(EditText) findViewById(R.id.apellidos);
-		direc=(EditText) findViewById(R.id.direc);
-		telefono=(EditText) findViewById(R.id.telefono);
-		email=(EditText) findViewById(R.id.email);
-		
-		
-		radio1=(RadioButton) findViewById(R.id.radio1);
-		radio2=(RadioButton) findViewById(R.id.radio2);
-		radio3=(RadioButton) findViewById(R.id.radio3);
-		radio4=(RadioButton) findViewById(R.id.radio4);
+        nombre = (EditText) findViewById(R.id.nombre);
+        apellidos = (EditText) findViewById(R.id.apellidos);
+        direc = (EditText) findViewById(R.id.direc);
+        telefono = (EditText) findViewById(R.id.telefono);
+        email = (EditText) findViewById(R.id.email);
+
+
+        radio1 = (RadioButton) findViewById(R.id.radio1);
+        radio2 = (RadioButton) findViewById(R.id.radio2);
+        radio3 = (RadioButton) findViewById(R.id.radio3);
+        radio4 = (RadioButton) findViewById(R.id.radio4);
 //        radio5=(RadioButton) findViewById(R.id.radio5);
 //        radio6=(RadioButton) findViewById(R.id.radio6);
-		
-		//categoria=(Spinner) findViewById(R.id.tipo);
-		
-		
-		observaciones=(EditText) findViewById(R.id.observaciones);
-		
-		cancelar=(Button) findViewById(R.id.boton_cancelar);
-		guardar=(Button) findViewById(R.id.boton_guardar);
 
-		img=(ImageView)findViewById(R.id.imgcontacto);
-
-		//Añadimos la toolbar
-		toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-		//La acitivity debe extender de AppCompatActivity para poder hacer el seteo a ActionBar
-		setSupportActionBar(toolbar);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //categoria=(Spinner) findViewById(R.id.tipo);
 
 
-		//Para el Spinner:
+        observaciones = (EditText) findViewById(R.id.observaciones);
+
+        cancelar = (Button) findViewById(R.id.boton_cancelar);
+        guardar = (Button) findViewById(R.id.boton_guardar);
+
+        img = (ImageView) findViewById(R.id.imgcontacto);
+
+        // Obtener instancia del FAB
+       // fab = (com.melnykov.fab.FloatingActionButton) findViewById(R.id.fab);
+
+        //Añadimos la toolbar
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        //La acitivity debe extender de AppCompatActivity para poder hacer el seteo a ActionBar
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        //Para el Spinner:
 //		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.categorias,android.R.layout.simple_spinner_item);
 //		//A�adimos el layout para el men�
 //		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -125,181 +131,190 @@ public class AltaUsuarios extends AppCompatActivity {
 //		categoria.setAdapter(adapter);
 //
 
-		TypedValue typedValueColorPrimaryDark = new TypedValue();
-		AltaUsuarios.this.getTheme().resolveAttribute(R.attr.colorPrimaryDark, typedValueColorPrimaryDark, true);
-		final int colorPrimaryDark = typedValueColorPrimaryDark.data;
-		if (Build.VERSION.SDK_INT >= 21) {
-			getWindow().setStatusBarColor(colorPrimaryDark);
-		}
+        TypedValue typedValueColorPrimaryDark = new TypedValue();
+        AltaUsuarios.this.getTheme().resolveAttribute(R.attr.colorPrimaryDark, typedValueColorPrimaryDark, true);
+        final int colorPrimaryDark = typedValueColorPrimaryDark.data;
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().setStatusBarColor(colorPrimaryDark);
+        }
 
 
-	guardar.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
-			String nom=nombre.getText().toString();
-			String apell=apellidos.getText().toString();
-			String direccion=direc.getText().toString();
-			String tele=telefono.getText().toString();
-			String correo=email.getText().toString();
-			long Id_Categ=0;
-			
-			if (radio1.isChecked()) {
-				Id_Categ=1;
-				
-			}
-			else if(radio2.isChecked())   {
-				Id_Categ=2;
-			}
-			else if(radio3.isChecked())   {
-				Id_Categ=3;
-			}
-			else if(radio4.isChecked())   {
-				Id_Categ=4;
-			}
+        guardar.setOnClickListener(new View.OnClickListener() {
 
-            else if(radio5.isChecked())   {
-                Id_Categ=5;
-            }
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
 
-            else if(radio6.isChecked())   {
-                Id_Categ=6;
-            }
-			
-			String observa=observaciones.getText().toString();
+                String nom = nombre.getText().toString();
+                String apell = apellidos.getText().toString();
+                String direccion = direc.getText().toString();
+                String tele = telefono.getText().toString();
+                String correo = email.getText().toString();
+                long Id_Categ = 0;
 
-				Uri imageUri = (Uri) img.getTag();//Obtenemos el atributo Tag con la URI de la imagen
+                if (radio1.isChecked()) {
+                    Id_Categ = 1;
+
+                } else if (radio2.isChecked()) {
+                    Id_Categ = 2;
+                } else if (radio3.isChecked()) {
+                    Id_Categ = 3;
+                } else if (radio4.isChecked()) {
+                    Id_Categ = 4;
+                } else if (radio5.isChecked()) {
+                    Id_Categ = 5;
+                } else if (radio6.isChecked()) {
+                    Id_Categ = 6;
+                }
+
+                String observa = observaciones.getText().toString();
+
+                //Uri imageUri = (Uri) img.getTag();//Obtenemos el atributo Tag con la URI de la imagen
 
 
-				//Creamos conexi�n a BB.dd
+                //Creamos conexi�n a BB.dd
 //				cn = new BBDD(getApplicationContext());//Ahora el contexto por defecto no es una activity sino q es un evento onClick. Por eso hay qu pasar getApplicationContext()
 //				SQLiteDatabase db = cn.getWritableDatabase();//Modo escritura
 //				cn.InsertarUsuario(db, nom, apell, direccion, tele, correo);
-			
-				
+
+
 //				Connection=new SQLControlador(getApplicationContext());
 //				Connection.abrirBaseDeDatos(2);//Modo Escritura
-			
-			
-			
-		
-			if (validar (validar) ){
-			
-			
-			try {
-				
-				Connection = new SQLControlador(getApplicationContext());//Objeto SQLControlador
-				Connection.abrirBaseDeDatos(2);
-				//Connection.InsertarUsuario(nom, apell, direccion, tele, correo, Id_Categ, observa);
 
-				Connection.insertarUsuarioconImagen(nom, apell, direccion, tele, correo, Id_Categ, observa, photo);
-				
-				Toast.makeText(getApplicationContext(), "Se ha incluido en la agenda a " + nom, Toast.LENGTH_SHORT).show();
-				Connection.cerrar();
-				
+
+                if (validar()) {
+
+
+                    try {
+
+                        Connection = new SQLControlador(getApplicationContext());//Objeto SQLControlador
+                        Connection.abrirBaseDeDatos(2);
+                        //Connection.InsertarUsuario(nom, apell, direccion, tele, correo, Id_Categ, observa);
+
+                        Connection.insertarUsuarioconImagen(nom, apell, direccion, tele, correo, Id_Categ, observa, photo);
+
+                        Toast.makeText(getApplicationContext(), "Se ha incluido en la agenda a " + nom, Toast.LENGTH_SHORT).show();
+                        Connection.cerrar();
+
 //				Intent i = new Intent(AltaUsuarios.this, MainActivity.class);
 //				startActivity(i);
-				setResult(RESULT_OK);
-			    finish();
-			    //Para actualizar datos en MainActivity Se va a llamar a Consultar() desde Onrestart() del com.agendacomercial.navigatio.
-			    
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
-			//Devolvemos el control y cerramos la Activity
-			
-				
-			
-			
-			}//Fin validar
-			
-			
-			}
-		});
-		
-	cancelar.setOnClickListener(new View.OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			
-			//Devolvemos el control y cerramos la Activity			
-			 setResult(RESULT_CANCELED);
-			    finish();
-			
-		}
-	});		
-		
-		
-	}
+                        setResult(RESULT_OK);
+                        finish();
+                        //Para actualizar datos en MainActivity Se va a llamar a Consultar() desde Onrestart() del com.agendacomercial.navigatio.
+
+                    } catch (SQLException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+
+                    //Devolvemos el control y cerramos la Activity
+
+
+                }//Fin validar
+
+
+            }
+        });
+
+        cancelar.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+
+                //Devolvemos el control y cerramos la Activity
+                setResult(RESULT_CANCELED);
+                finish();
+
+            }
+        });
+
+
+        // Asignar escucha  FAB
+    /*    fab.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        agregarImagen(v);
+
+                    }
+                }
+        );*/
+
+    }
+
 
 	//Gestionamos el evento del ImageView
 	public void onImgClick(View view) {
-		Intent intent = null;
-		//Se controla la versión de android...
-		if (Build.VERSION.SDK_INT < 19) {
-			//Menor que KIT-KAT
-			intent = new Intent();
-			intent.setAction(Intent.ACTION_GET_CONTENT);//Permisos para acceder a los contenidos..
-			intent.setType("image/*");//Permiso para los contenidos de tipo imagen con la extensión que sea
-			//startActivityForResult(intent, requestCode);
 
-
-			final CharSequence[] options = {"Tomar foto", "Elegir de galeria", "Cancelar"};
-			final AlertDialog.Builder builder = new AlertDialog.Builder(AltaUsuarios.this);
-			builder.setTitle("Elige una opcion:");
-			builder.setItems(options, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int seleccion) {
-					if (options[seleccion] == "Tomar foto") {
-						openCamera();//Abriendo la cámara
-					} else if (options[seleccion] == "Elegir de galeria") {
-						Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-						intent.setType("image/*");
-						startActivityForResult(intent.createChooser(intent, "Selecciona app de imagen"), SELECT_PICTURE);
-					} else if (options[seleccion] == "Cancelar") {
-						dialog.dismiss();
-					}
-				}
-			});
-			builder.show();
+        agregarImagen(view);
+	}
 
 
 
-		} else {
-			//Para Kit-kat o superior y abriendo cualquier directorio que contenga imágenes
+    private void agregarImagen(View view) {
+
+        Intent intent = null;
+        //Se controla la versión de android...
+        if (Build.VERSION.SDK_INT < 19) {
+            //Menor que KIT-KAT
+            intent = new Intent();
+            intent.setAction(Intent.ACTION_GET_CONTENT);//Permisos para acceder a los contenidos..
+            intent.setType("image/*");//Permiso para los contenidos de tipo imagen con la extensión que sea
+            //startActivityForResult(intent, requestCode);
+
+
+            final CharSequence[] options = {"Tomar foto", "Elegir de galeria", "Cancelar"};
+            final AlertDialog.Builder builder = new AlertDialog.Builder(AltaUsuarios.this);
+            builder.setTitle("Elige una opcion:");
+            builder.setItems(options, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int seleccion) {
+                    if (options[seleccion] == "Tomar foto") {
+                        openCamera();//Abriendo la cámara
+                    } else if (options[seleccion] == "Elegir de galeria") {
+                        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        intent.setType("image/*");
+                        startActivityForResult(intent.createChooser(intent, "Selecciona app de imagen"), SELECT_PICTURE);
+                    } else if (options[seleccion] == "Cancelar") {
+                        dialog.dismiss();
+                    }
+                }
+            });
+            builder.show();
+
+
+
+        } else {
+            //Para Kit-kat o superior y abriendo cualquier directorio que contenga imágenes
 			/*intent=new Intent(Intent.ACTION_OPEN_DOCUMENT);//Permisos para acceder a contenidos
 			intent.addCategory(Intent.CATEGORY_OPENABLE);//Archivos abiertos
 			intent.setType("image*//*");//Permiso para los contenidos de tipo imagen con la extensión que sea
 			startActivityForResult(intent, requestCode);*/
 
-			//Para Kit-kat o superior
-			final CharSequence[] options = {"Tomar foto", "Elegir de galeria", "Cancelar"};
-			final AlertDialog.Builder builder = new AlertDialog.Builder(AltaUsuarios.this);
-			builder.setTitle("Elige una opcion:");
-			builder.setItems(options, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int seleccion) {
-					if(options[seleccion] == "Tomar foto"){
-						openCamera();//Abriendo la cámara
-					}else if (options[seleccion] == "Elegir de galeria") {
-						Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-						intent.setType("image/*");
-						startActivityForResult(intent.createChooser(intent, "Selecciona app de imagen"), SELECT_PICTURE);
-					}else if(options[seleccion] == "Cancelar"){
-						dialog.dismiss();
-					}
-				}
-			});
-			builder.show();
+            //Para Kit-kat o superior
+            final CharSequence[] options = {"Hacer fotografía", "Elegir de galeria", "Cancelar"};
+            final AlertDialog.Builder builder = new AlertDialog.Builder(AltaUsuarios.this);
+            builder.setTitle("Elige una opcion:");
+            builder.setItems(options, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int seleccion) {
+                    if(options[seleccion] == "Hacer fotografía"){
+                        openCamera();//Abriendo la cámara
+                    }else if (options[seleccion] == "Elegir de galeria") {
+                        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        intent.setType("image/*");
+                        startActivityForResult(intent.createChooser(intent, "Selecciona app de imagen"), SELECT_PICTURE);
+                    }else if(options[seleccion] == "Cancelar"){
+                        dialog.dismiss();
+                    }
+                }
+            });
+            builder.show();
 
-			/**
-			 * Para controlar el tipo de respuesta que se recibe al elegir una imagen para el contacto
-			 */
+            /**
+             * Para controlar el tipo de respuesta que se recibe al elegir una imagen para el contacto
+             */
 //				@Override
 //				protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //					super.onActivityResult(requestCode, resultCode, data);
@@ -315,9 +330,10 @@ public class AltaUsuarios extends AppCompatActivity {
 //				}
 
 
-		}
-	}
-				@Override
+        }
+    }
+
+    @Override
 				protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 					super.onActivityResult(requestCode, resultCode, data);
 
@@ -336,10 +352,28 @@ public class AltaUsuarios extends AppCompatActivity {
 
 
 
+								//FUNCIONA A VECES....DA PROBLEMAS DE MEMORIA
+//								Bitmap bitmap;
+//								bitmap = BitmapFactory.decodeFile(dir);
+//								photo=DbBitmapUtility.getBytes(bitmap);
 
-								Bitmap bitmap;
-								bitmap = BitmapFactory.decodeFile(dir);
-								photo=DbBitmapUtility.getBytes(bitmap);
+								//---------------
+
+								Bitmap bitmapdeco;
+                                Bitmap redimensionado;
+								File imgFile = new  File(dir);
+                                bitmapdeco=Comunes.decodeFile(imgFile);//Llamamos a un método incluido en Comunes que gestiona mejor la memoria del bitmap que devuelve....
+
+                                redimensionado=Comunes.redimensionarImagenMaximo(bitmapdeco,80,70);
+								photo=DbBitmapUtility.getBytes(redimensionado);
+
+
+//								BitmapFactory.Options opciones = new BitmapFactory.Options ();
+//								opciones.inSampleSize = 8;
+//
+//								Bitmap preview_bitmap = BitmapFactory.decodeStream (imgFile, null, opciones);
+
+								//photo=DbBitmapUtility.getBytes(bitmap);
 
 							}
 							break;
@@ -354,7 +388,6 @@ public class AltaUsuarios extends AppCompatActivity {
 //
 //								bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
 //								byte[] photo = baos.toByteArray();
-
 								//Nuevo para SQLite
 								//byte[] photo2 =data.getByteArrayExtra();
 								//byte[] photo3 =path.getBytes();
@@ -480,7 +513,8 @@ public class AltaUsuarios extends AppCompatActivity {
 
 					String observa = observaciones.getText().toString();
 
-					Uri imageUri = (Uri) img.getTag();//Obtenemos el atributo Tag con la URI de la imagen
+					//Uri imageUri = (Uri) img.getTag();//Obtenemos el atributo Tag con la URI de la imagen
+
 					//Creamos conexi�n a BB.dd
 //				cn = new BBDD(getApplicationContext());//Ahora el contexto por defecto no es una activity sino q es un evento onClick. Por eso hay qu pasar getApplicationContext()
 //				SQLiteDatabase db = cn.getWritableDatabase();//Modo escritura
@@ -491,7 +525,7 @@ public class AltaUsuarios extends AppCompatActivity {
 //				Connection.abrirBaseDeDatos(2);//Modo Escritura
 
 
-					if (validar(validar)) {
+					if (validar()) {
 
 
 						try {
@@ -530,7 +564,7 @@ public class AltaUsuarios extends AppCompatActivity {
 				}
 
 				//Validaci�n para que el nombre no se deje vac�o
-				private boolean validar(boolean validar) {
+				private boolean validar() {
 					if ((nombre.getText().toString().equals("")) || (telefono.getText().toString().equals(""))) {
 						//if (nombre.getText().toString().length() == 0){
 
@@ -538,6 +572,9 @@ public class AltaUsuarios extends AppCompatActivity {
 
 						//Se prepara la alerta creando nueva instancia
 						AlertDialog.Builder dialogValidar = new AlertDialog.Builder(this);
+
+						//AlertDialog.Builder dialogValidar = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AlertDialogCustom));
+
 						dialogValidar.setIcon(android.R.drawable.ic_dialog_alert);//icono
 						dialogValidar.setTitle(getResources().getString(R.string.agenda_crear_titulo));//T�tulo
 						dialogValidar.setMessage(getResources().getString(R.string.agenda_texto_vacio));

@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
+
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
     tools:context=".AltaUsuarios"
     >
+
+
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -32,6 +39,7 @@
             app:theme="@style/ToolbarTheme" />
 
         //MODIFICACIONES PARA MATERIAL DESING---CUIDADO PORQUE TIENE UN ALTO COSTE EN EL RENDIMIENTO------------//
+
 
         <ImageView
             android:layout_width="150dp"
@@ -234,6 +242,33 @@
 
         </android.support.design.widget.TextInputLayout>
 
+
+        <android.support.design.widget.CoordinatorLayout
+            android:id="@+id/main_content"
+            android:layout_width="match_parent"
+            android:layout_height="800dp">
+
+
+
+        <com.melnykov.fab.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:borderWidth="0dp"
+            app:elevation="6dp"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:layout_gravity="bottom|center_horizontal"
+
+            android:layout_margin="16dp"
+            android:src="@drawable/camera"
+            fab:fab_colorNormal="@color/md_red_700"
+            fab:fab_colorPressed="@color/md_purple_A100"
+            fab:fab_colorRipple="@color/md_amber_900" />
+
+    </android.support.design.widget.CoordinatorLayout >
+
+
         <LinearLayout
             android:id="@+id/botonera"
             android:layout_width="match_parent"
@@ -272,7 +307,9 @@
 
                 android:padding="5dp"/>
 
+
         </LinearLayout>
+
 
         //FIN MODIFICACIONES PARA MATERIAL DESING---------------//
 
@@ -297,4 +334,7 @@
 
     </RelativeLayout>
 
+
+
 </ScrollView>
+

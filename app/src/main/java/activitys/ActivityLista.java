@@ -88,7 +88,7 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
     private Toolbar toolbar;
 
     //Para el buscador
-    private int textlength = 0;
+    //private int textlength = 0;
     private SearchView searchView;
 
 
@@ -452,11 +452,11 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
         Cursor c = dbConnection.CursorBuscarUno(id);// Devuelve un Cursor
 
         // int _id= c.getInt(c.getColumnIndex("_id"));
-        String nombre = c.getString(c.getColumnIndex("Nombre"));
-        String apellidos = c.getString(c.getColumnIndex("Apellidos"));
-        String direccion = c.getString(c.getColumnIndex("Direccion"));
+       // String nombre = c.getString(c.getColumnIndex("Nombre"));
+        //String apellidos = c.getString(c.getColumnIndex("Apellidos"));
+        //String direccion = c.getString(c.getColumnIndex("Direccion"));
         String telefono = c.getString(c.getColumnIndex("Telefono"));
-        String email = c.getString(c.getColumnIndex("Email"));
+        //String email = c.getString(c.getColumnIndex("Email"));
 
         // txtCaja2.setText("" + posicion + " posicion");
         dbConnection.cerrar();
@@ -593,7 +593,20 @@ public class ActivityLista extends AppCompatActivity implements OnQueryTextListe
 
 
         if(totalRegistros>0) {
-            txtTotales.setText(concatena_numero_registros+ " " + totales + " " + getResources().getString(R.string.titulo_activity_lista));
+            //String total=String.format(concatena_numero_registros);
+
+            //StringBuilder ponemostotal1=new StringBuilder(String.format(concatena_numero_registros,espacios,totales,espacios));
+            //txtTotales.setText(concatena_numero_registros+ " " + totales + " " + getResources().getString(R.string.titulo_activity_lista));
+            //StringBuilder ponemostotal=new StringBuilder(ponemostotal1);
+            //String total=ponemostotal.append(append(getResources().getString(R.string.titulo_activity_lista).toString());
+
+            //String total=ponemostotal.append();
+
+            String espacios=" ";
+            StringBuilder StringBuilder = new StringBuilder(String.format(concatena_numero_registros, espacios));
+            String salida=StringBuilder.append(espacios).append(totales).append(espacios).append(getResources().getString(R.string.titulo_activity_lista)).toString();
+
+            txtTotales.setText(salida);
         }
 
         else{
